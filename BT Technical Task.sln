@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35806.99 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT Technical Task", "BT Technical Task\BT Technical Task.csproj", "{8FDE2C66-5015-4A1A-ABBD-A461E7C7F6DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayingCards.UnitTest", "PlayingCards.UnitTest\PlayingCards.UnitTest.csproj", "{EC068067-693F-4200-A305-3D3722279060}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8FDE2C66-5015-4A1A-ABBD-A461E7C7F6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FDE2C66-5015-4A1A-ABBD-A461E7C7F6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FDE2C66-5015-4A1A-ABBD-A461E7C7F6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC068067-693F-4200-A305-3D3722279060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC068067-693F-4200-A305-3D3722279060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC068067-693F-4200-A305-3D3722279060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC068067-693F-4200-A305-3D3722279060}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
