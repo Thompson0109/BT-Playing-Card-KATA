@@ -12,8 +12,27 @@ namespace BT_Technical_Task.Services
 
 
         public static void StartGame(List<string> ListOfCards)
-        { 
-        
+        {
+            //ensures previous game data is cleared
+            handOfCards.Clear();
+            ModifiedCardValues.Clear();
+            FinalGameScore = 0;
+
+            foreach (var card in ListOfCards)
+            {
+                string value = card.Substring(0, 1).ToLower();
+                string suite = card.Substring(card.Length - 1, 1).ToLower();
+
+                var playingCard = new PlayingCard(value, suite);
+
+                // Convert and score
+                int score = PlayingCard.CardValueModifier(playingCard);
+
+                handOfCards.Add(playingCard);
+                ModifiedCardValues.Add(score);
+
+                FinalGameScore += score;
+            }
         }
     }
 }
