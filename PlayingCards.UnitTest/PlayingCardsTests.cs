@@ -27,6 +27,16 @@ namespace PlayingCards.UnitTest
             int ModifiedVal = PlayingCard.CardValueModifier(playingCard);
             Assert.Equal(20, ModifiedVal);
         }
+
+        [Theory]
+        [InlineData(new string[] { "3C", "4C" }, 7)]
+        [InlineData(new string[] { "TC", "TD", "TH", "TS" }, 100)]
+        public void ListOfCardsScoreCorrectly(string[] cards, int expectedScore)
+        {
+            CardGame.StartGame(cards.ToList());
+            Assert.Equal(expectedScore, CardGame.FinalGameScore);
+        }
+
         [Fact]
         public void JokersInCardList()
         {
