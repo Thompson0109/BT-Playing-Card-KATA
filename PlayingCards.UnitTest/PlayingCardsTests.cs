@@ -1,4 +1,6 @@
 ﻿using BT_Technical_Task.Models;
+using BT_Technical_Task.Services;
+
 namespace PlayingCards.UnitTest
 {
     public class PlayingCardsTests
@@ -6,7 +8,9 @@ namespace PlayingCards.UnitTest
         [Fact]
         public void AcceptsListOfCards()
         {
-
+            List<string> ListOfCardsTest = new List<string>() { "2C", "2D", "2H", "TC", "KC" };
+            CardGame.StartGame(ListOfCardsTest);
+            Assert.NotNull(CardGame.handOfCards);
         }
 
         [Fact]
