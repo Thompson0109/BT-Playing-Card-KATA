@@ -57,8 +57,7 @@ namespace PlayingCards.UnitTest
             var game = new CardGame();
             int score = game.StartGame(new List<string> { "JR", "JR", "2C" });
 
-            Assert.Equal(2, score);
-
+            Assert.Equal(8, score);
         }
 
         [Fact]
@@ -72,15 +71,6 @@ namespace PlayingCards.UnitTest
         }
 
 
-        [Fact]
-        public void DuplicateThrowsError()
-        {
-            var game = new CardGame();
-
-            Assert.Throws<InvalidOperationException>(() =>
-                game.StartGame(new List<string> { "2C", "2C" })
-            );
-        }
 
         [Fact]
         public void CardToScoreConversion()

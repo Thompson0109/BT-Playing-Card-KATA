@@ -9,6 +9,7 @@
         public int SuitMultiplier { get; }
         public string RawValue { get; }
         public string RawSuit { get; }
+        public bool IsJoker => RawValue == "jr";
 
         public PlayingCard(int rank, int suitMultiplier, string rawValue, string rawSuit)
         {
@@ -19,13 +20,25 @@
         }
 
 
-        public static PlayingCard Parse(string text)
+        public static PlayingCard Parse(string cardStr)
         {
-            if (string.IsNullOrWhiteSpace(text) || text.Length < 2)
-                throw new ArgumentException($"Invalid card format: {text}");
+            if (string.IsNullOrWhiteSpace(cardStr) || cardStr.Length < 2)
+                throw new ArgumentException($"Invalid card format: {cardStr}");
 
-            string rawRank = text[..^1].ToLower();      // everything except last char
-            string rawSuit = text[^1..].ToLower();      // last char
+            cardStr = cardStr.Trim().ToLower();
+
+            if (cardStr == "jr")
+            {
+                return new PlayingCard(0, 0, "jr", "");
+            }
+
+            // standard cards must be at least 2 characters
+
+            if (cardStr.Length < 2)
+                throw new ArgumentException($"Invalid card format: {cardStr}");
+
+            string rawRank = cardStr[..^1].ToLower();      // everything except last char
+            string rawSuit = cardStr[^1..].ToLower();      // last char
 
             int rank = MapRank(rawRank);
             int suitMul = MapSuit(rawSuit);

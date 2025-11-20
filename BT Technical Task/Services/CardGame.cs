@@ -22,12 +22,34 @@ namespace BT_Technical_Task.Services
             ModifiedCardValues.Clear();
             Score = 0;
 
-            foreach (var cardText in ListOfCards)
+            int baseScore = 0;
+            int jokerCount = 0;
+
+            HashSet<string> seenNonJokers = new();
+
+            foreach (var cardStr in ListOfCards)
             {
-                var card = PlayingCard.Parse(cardText);
+                var card = PlayingCard.Parse(cardStr);
                 game.Hand.Add(card);
                 Score += card.GetScore();
+
+                if (card.IsJoker)
+                {
+                    jokerCount++;
+                    if (jokerCount > 2)
+                        throw new InvalidOperationException("A Joker (JR) can only appear twice.");
+                }
+                else
+                {
+                    if (!seenNonJokers.Add(cardStr.ToLower()))
+                        throw new InvalidOperationException($"Duplicate card detected: {cardStr}");
+
+                    baseScore += card.GetScore();
+                }
             }
+            int multiplier = (int)Math.Pow(2, jokerCount);
+            Score = baseScore * multiplier;
+
             return Score;
 
         }
