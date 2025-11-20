@@ -5,63 +5,64 @@
         //THINGS TO IMPROVE 
         // place magic numbers into variables 
 
-        public string CardValue { get; set; }
-        public string CardSuite { get; set; }
-        public int ModifiedCardVal { get; set; }
+        public int Rank { get; }
+        public int SuitMultiplier { get; }
+        public string RawValue { get; }
+        public string RawSuit { get; }
 
-        public PlayingCard(string cardVal, string cardSuite)
+        public PlayingCard(int rank, int suitMultiplier, string rawValue, string rawSuit)
         {
-            CardValue = cardVal;
-            CardSuite = cardSuite;
-            ModifiedCardVal = 0;
+            Rank = rank;
+            SuitMultiplier = suitMultiplier;
+            RawValue = rawValue;
+            RawSuit = rawSuit;
         }
 
-        public static int JokerCount;
-        public static bool isJokerAccepted()
-        {
-            JokerCount++;
 
-            if (JokerCount >= 3)
-                return false;
-            else
-                return true;
+        public static PlayingCard Parse(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text) || text.Length < 2)
+                throw new ArgumentException($"Invalid card format: {text}");
+
+            string rawRank = text[..^1].ToLower();      // everything except last char
+            string rawSuit = text[^1..].ToLower();      // last char
+
+            int rank = MapRank(rawRank);
+            int suitMul = MapSuit(rawSuit);
+
+            return new PlayingCard(rank, suitMul, rawRank, rawSuit);
         }
 
-        public static int CardValueModifier(PlayingCard card)
+        private static int MapRank(string rank)
         {
-            string rank = card.CardValue.ToLower();
+            if (int.TryParse(rank, out int num)) return num;
 
-            if (int.TryParse(rank, out int num))
-            {
-                card.ModifiedCardVal = num;
-                return CardSuiteModifier(card);
-            }
-
-            card.ModifiedCardVal = rank switch
+            return rank switch
             {
                 "t" => 10,
                 "j" => 11,
                 "q" => 12,
                 "k" => 13,
                 "a" => 14,
-                _ => 0
+                _ => throw new ArgumentException($"Invalid card rank: {rank}")
             };
-
-            return CardSuiteModifier(card);
         }
 
-        public static int CardSuiteModifier(PlayingCard card)
+
+        private static int MapSuit(string suit)
         {
-            int value = card.ModifiedCardVal; 
-
-            return card.CardSuite.ToLower() switch
+            return suit switch
             {
-                "c" => value * 1,
-                "d" => value * 2,
-                "h" => value * 3,
-                "s" => value * 4,
-                _ => value
+                "c" => 1,
+                "d" => 2,
+                "h" => 3,
+                "s" => 4,
+                _ => throw new ArgumentException($"Invalid card suit: {suit}")
             };
         }
+
+
+        public int GetScore() => Rank * SuitMultiplier;
     }
 }
+

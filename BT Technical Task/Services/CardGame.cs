@@ -8,35 +8,28 @@ namespace BT_Technical_Task.Services
 
         public static List<int> ModifiedCardValues = new List<int>();
 
-        public static int FinalGameScore { get; private set; }
+        public int Score { get; private set; }
 
         private static bool IsJokerModifierAccepted;
 
 
-        public static void StartGame(List<string> ListOfCards)
+        public  int StartGame(List<string> ListOfCards)
         {
             CardGame game = new CardGame();
 
             //ensures previous game data is cleared
             game.Hand.Clear();
             ModifiedCardValues.Clear();
-            FinalGameScore = 0;
+            Score = 0;
 
-            foreach (var card in ListOfCards)
+            foreach (var cardText in ListOfCards)
             {
-                string value = card.Substring(0, 1).ToLower();
-                string suite = card.Substring(card.Length - 1, 1).ToLower();
-
-                var playingCard = new PlayingCard(value, suite);
-
-                // Convert and score
-                int score = PlayingCard.CardValueModifier(playingCard);
-
-                game.Hand.Add(playingCard);
-                ModifiedCardValues.Add(score);
-
-                FinalGameScore += score;
+                var card = PlayingCard.Parse(cardText);
+                game.Hand.Add(card);
+                Score += card.GetScore();
             }
+            return Score;
+
         }
     }
 }

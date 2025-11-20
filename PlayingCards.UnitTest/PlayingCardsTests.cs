@@ -11,23 +11,26 @@ namespace PlayingCards.UnitTest
             CardGame game = new CardGame();
 
             List<string> ListOfCardsTest = new List<string>() { "2C", "2D", "2H", "TC", "KC" };
-            CardGame.StartGame(ListOfCardsTest);
+            game.StartGame(ListOfCardsTest);
+
             Assert.NotNull(game.Hand);
         }
 
         [Fact]
         public void AddsSuiteModifier()
         {
-            PlayingCard playingCard = new PlayingCard("2", "d");
-            int ModifiedVal = PlayingCard.CardValueModifier(playingCard);
-            Assert.Equal(4, ModifiedVal);
+            var card = PlayingCard.Parse("2D");
+
+            int score = card.GetScore();
+            Assert.Equal(4, score);
         }
         [Fact]
         public void AddsRankModifier()
         {
-            PlayingCard playingCard = new PlayingCard("t", "d");
-            int ModifiedVal = PlayingCard.CardValueModifier(playingCard);
-            Assert.Equal(20, ModifiedVal);
+            var card = PlayingCard.Parse("TD");
+
+            int score = card.GetScore();
+            Assert.Equal(20, score);
         }
 
         [Theory]
@@ -35,8 +38,9 @@ namespace PlayingCards.UnitTest
         [InlineData(new string[] { "TC", "TD", "TH", "TS" }, 100)]
         public void ListOfCardsScoreCorrectly(string[] cards, int expectedScore)
         {
-            CardGame.StartGame(cards.ToList());
-            Assert.Equal(expectedScore, CardGame.FinalGameScore);
+            CardGame game = new CardGame();
+            int finalScore = game.StartGame(cards.ToList());
+            Assert.Equal(expectedScore, finalScore);
         }
 
         [Fact]
