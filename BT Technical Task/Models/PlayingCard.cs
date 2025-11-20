@@ -2,15 +2,18 @@
 {
     public class PlayingCard
     {
-        public int CardValue { get; set; }
+        //THINGS TO IMPROVE 
+        // place magic numbers into variables 
+
+        public string CardValue { get; set; }
         public string CardSuite { get; set; }
         public int ModifiedCardVal { get; set; }
 
-        public PlayingCard(int cardVal, string cardSuite)
+        public PlayingCard(string cardVal, string cardSuite)
         {
             CardValue = cardVal;
             CardSuite = cardSuite;
-            ModifiedCardVal = cardVal;
+            ModifiedCardVal = 0;
         }
 
         public static int JokerCount;
@@ -24,53 +27,41 @@
                 return true;
         }
 
-        public static int CardSuiteModifier(PlayingCard card)
-        {
-
-            switch (card.CardSuite)
-            {
-                case "c":
-                    card.ModifiedCardVal = card.CardValue * 1;
-                    break;
-                case "d":
-                    card.ModifiedCardVal = card.CardValue * 2;
-                    break;
-                case "h":
-                    card.ModifiedCardVal = card.CardValue * 3;
-                    break;
-                case "s":
-                    card.ModifiedCardVal = card.CardValue * 4;
-                    break;
-                default:
-                    Console.WriteLine($"Invalid Card Suite [{card.CardSuite}]");
-                    card.ModifiedCardVal = card.CardValue;
-                    break;
-            }
-            return card.ModifiedCardVal;
-        }
         public static int CardValueModifier(PlayingCard card)
         {
+            string rank = card.CardValue.ToLower();
 
-            switch (card.CardSuite)
+            if (int.TryParse(rank, out int num))
             {
-                case "t":
-                    card.ModifiedCardVal = card.CardValue  + 10;
-                    break;
-                case "j":
-                    card.ModifiedCardVal = card.CardValue  + 12;
-                    break;
-                case "h":
-                    card.ModifiedCardVal = card.CardValue + 13;
-                    break;
-                case "s":
-                    card.ModifiedCardVal = card.CardValue + 14;
-                    break;
-                default:
-                    Console.WriteLine($"Invalid Card Suite [{card.CardSuite}]");
-                    card.ModifiedCardVal = card.CardValue;
-                    break;
+                card.ModifiedCardVal = num;
+                return CardSuiteModifier(card);
             }
-            return card.ModifiedCardVal;
+
+            card.ModifiedCardVal = rank switch
+            {
+                "t" => 10,
+                "j" => 11,
+                "q" => 12,
+                "k" => 13,
+                "a" => 14,
+                _ => 0
+            };
+
+            return CardSuiteModifier(card);
+        }
+
+        public static int CardSuiteModifier(PlayingCard card)
+        {
+            int value = card.ModifiedCardVal; 
+
+            return card.CardSuite.ToLower() switch
+            {
+                "c" => value * 1,
+                "d" => value * 2,
+                "h" => value * 3,
+                "s" => value * 4,
+                _ => value
+            };
         }
     }
 }

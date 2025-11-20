@@ -12,14 +12,16 @@ namespace PlayingCards.UnitTest
         [Fact]
         public void AddsSuiteModifier()
         {
-            PlayingCard playingCard = new PlayingCard(2, "d");
-            int ModifiedVal = PlayingCard.CardSuiteModifier(playingCard);
+            PlayingCard playingCard = new PlayingCard("2", "d");
+            int ModifiedVal = PlayingCard.CardValueModifier(playingCard);
             Assert.Equal(4, ModifiedVal);
         }
         [Fact]
         public void AddsRankModifier()
         {
-   
+            PlayingCard playingCard = new PlayingCard("t", "d");
+            int ModifiedVal = PlayingCard.CardValueModifier(playingCard);
+            Assert.Equal(20, ModifiedVal);
         }
         [Fact]
         public void JokersInCardList()
