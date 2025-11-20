@@ -4,17 +4,21 @@ namespace BT_Technical_Task.Services
 {
     public class CardGame
     {
-        public static List<PlayingCard> handOfCards = new List<PlayingCard>();
+        public List<PlayingCard> Hand { get; private set; } = new();
+
         public static List<int> ModifiedCardValues = new List<int>();
-        public static int FinalGameScore = 0;
+
+        public static int FinalGameScore { get; private set; }
 
         private static bool IsJokerModifierAccepted;
 
 
         public static void StartGame(List<string> ListOfCards)
         {
+            CardGame game = new CardGame();
+
             //ensures previous game data is cleared
-            handOfCards.Clear();
+            game.Hand.Clear();
             ModifiedCardValues.Clear();
             FinalGameScore = 0;
 
@@ -28,7 +32,7 @@ namespace BT_Technical_Task.Services
                 // Convert and score
                 int score = PlayingCard.CardValueModifier(playingCard);
 
-                handOfCards.Add(playingCard);
+                game.Hand.Add(playingCard);
                 ModifiedCardValues.Add(score);
 
                 FinalGameScore += score;

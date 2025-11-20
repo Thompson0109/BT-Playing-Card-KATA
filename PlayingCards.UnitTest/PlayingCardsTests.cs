@@ -8,9 +8,11 @@ namespace PlayingCards.UnitTest
         [Fact]
         public void AcceptsListOfCards()
         {
+            CardGame game = new CardGame();
+
             List<string> ListOfCardsTest = new List<string>() { "2C", "2D", "2H", "TC", "KC" };
             CardGame.StartGame(ListOfCardsTest);
-            Assert.NotNull(CardGame.handOfCards);
+            Assert.NotNull(game.Hand);
         }
 
         [Fact]
