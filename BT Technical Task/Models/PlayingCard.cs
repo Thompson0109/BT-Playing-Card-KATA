@@ -60,10 +60,10 @@
                     card.ModifiedCardVal = card.CardValue  + 12;
                     break;
                 case "h":
-                    card.ModifiedCardVal = card.CardValue * 13;
+                    card.ModifiedCardVal = card.CardValue + 13;
                     break;
                 case "s":
-                    card.ModifiedCardVal = card.CardValue * 14;
+                    card.ModifiedCardVal = card.CardValue + 14;
                     break;
                 default:
                     Console.WriteLine($"Invalid Card Suite [{card.CardSuite}]");

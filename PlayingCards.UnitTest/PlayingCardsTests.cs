@@ -1,4 +1,5 @@
-﻿namespace PlayingCards.UnitTest
+﻿using BT_Technical_Task.Models;
+namespace PlayingCards.UnitTest
 {
     public class PlayingCardsTests
     {
@@ -11,7 +12,9 @@
         [Fact]
         public void AddsSuiteModifier()
         {
-           
+            PlayingCard playingCard = new PlayingCard(2, "d");
+            int ModifiedVal = PlayingCard.CardSuiteModifier(playingCard);
+            Assert.Equal(4, ModifiedVal);
         }
         [Fact]
         public void AddsRankModifier()
