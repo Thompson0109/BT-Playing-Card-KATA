@@ -46,8 +46,42 @@ namespace PlayingCards.UnitTest
         [Fact]
         public void JokersInCardList()
         {
+            var card = PlayingCard.Parse("JR");
+
+            Assert.True(card.IsJoker);
+      
+        }
+        [Fact]
+        public void TwoJokersAreAllowed()
+        {
+            var game = new CardGame();
+            int score = game.StartGame(new List<string> { "JR", "JR", "2C" });
+
+            Assert.Equal(2, score);
 
         }
+
+        [Fact]
+        public void ThreeJokersThrowsError()
+        {
+            var game = new CardGame();
+
+            Assert.Throws<InvalidOperationException>(() =>
+                game.StartGame(new List<string> { "JR", "JR", "JR" })
+            );
+        }
+
+
+        [Fact]
+        public void DuplicateThrowsError()
+        {
+            var game = new CardGame();
+
+            Assert.Throws<InvalidOperationException>(() =>
+                game.StartGame(new List<string> { "2C", "2C" })
+            );
+        }
+
         [Fact]
         public void CardToScoreConversion()
         {
